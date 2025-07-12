@@ -24,6 +24,10 @@ fn explode(elements: &[String]) -> Vec<Vec<String>> {
     elements.iter().map(|el| el.chars().map(|c| c.to_string()).collect()).collect()
 }
 
+fn find_color_or_default(elements: &[String], color: &str, fallback: &str) -> String {
+    // elements.iter().find(|el| el.contains(color)).cloned().unwrap_or_else(|| fallback.to_string())
+    elements.iter().find(|el| el.contains(color)).map_or(fallback.to_string(), |el| el.to_string()) 
+}
 fn main() {
     let mut colors = vec![
         String::from("red"),
@@ -44,7 +48,13 @@ fn main() {
     // let mut transform_to: Vec<String> = vec![];
     // move_elements(colors, &mut transform_to);
     // println!("Transformed elements: {:?}", transform_to);
-    let colors_exploded = explode(&colors);
-    println!("Exploded elements: {:?}", colors_exploded);
+
+    // let colors_exploded = explode(&colors);
+    // println!("Exploded elements: {:?}", colors_exploded);
+
+    let color_to_find = "999";
+    let default_color = "black";
+    let found_color = find_color_or_default(&colors, color_to_find, default_color);
+    println!("Found color: {}", found_color);
 
 }
